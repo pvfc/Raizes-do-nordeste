@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raízes do Nordeste — Comida de verdade, do jeito da terra</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --areia:#F2E4C9;
+    --areia-2:#EAD9B4;
+    --barro:#B5482A;
+    --barro-escuro:#8C351C;
+    --azul:#1F3B57;
+    --azul-2:#16293D;
+    --sol:#E8A93B;
+    --verde:#4C6B4F;
+    --tinta:#1A1512;
+    --branco:#FFF9EE;
+    --linha: rgba(26,21,18,0.14);
+    --sombra: 0 10px 30px rgba(26,21,18,0.14);
+    --radius: 4px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--areia);
+    color:var(--tinta);
+    font-family:'Work Sans', sans-serif;
+    font-size:16px;
+    line-height:1.5;
+  }
+  h1,h2,h3,h4{
+    font-family:'Fraunces', serif;
+    font-weight:900;
+    margin:0 0 .4em;
+    letter-spacing:-.01em;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    text-transform:uppercase;
+    letter-spacing:.14em;
+    font-size:.72rem;
+    font-weight:600;
+    color:var(--barro-escuro);
+  }
+  a{color:inherit;}
+  button{font-family:inherit;cursor:pointer;}
+  img,svg{display:block;max-width:100%;}
+  .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);}
+
+  /* ---------- LAYOUT ---------- */
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+
+  /* HEADER */
+  header.site{
+    position:sticky;top:0;z-index:50;
+    background:var(--azul);
+    color:var(--branco);
+    border-bottom:3px solid var(--tinta);
+  }
+  .header-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 24px;max-width:1120px;margin:0 auto;gap:20px;
+  }
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--branco);}
+  .brand svg{width:42px;height:42px;flex:none;}
+  .brand-text{display:flex;flex-direction:column;line-height:1.05;}
+  .brand-text strong{font-family:'Fraunces',serif;font-weight:900;font-size:1.25rem;}
+  .brand-text span{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.16em;color:var(--sol);text-transform:uppercase;}
+
+  nav.tabs{display:flex;gap:4px;flex-wrap:wrap;}
+  nav.tabs button{
+    background:transparent;border:2px solid transparent;color:var(--branco);
+    padding:8px 12px;border-radius:var(--radius);font-weight:600;font-size:.88rem;
+    transition:.15s;
+  }
+  nav.tabs button:hover{border-color:rgba(255,249,238,.35);}
+  nav.tabs button.active{background:var(--sol);color:var(--tinta);border-color:var(--tinta);}
+
+  .header-actions{display:flex;align-items:center;gap:10px;}
+  .cart-btn{
+    position:relative;background:var(--barro);color:var(--branco);border:2px solid var(--tinta);
+    padding:8px 14px;border-radius:var(--radius);font-weight:700;font-size:.85rem;
+  }
+  .cart-badge{
+    position:absolute;top:-8px;right:-8px;background:var(--sol);color:var(--tinta);
+    border:2px solid var(--tinta);border-radius:50%;width:22px;height:22px;
+    font-size:.7rem;display:flex;align-items:center;justify-content:center;font-weight:700;
+  }
+  .pill-btn{
+    background:var(--branco);color:var(--azul);border:2px solid var(--tinta);
+    padding:8px 14px;border-radius:var(--radius);font-weight:700;font-size:.85rem;
+  }
+
+  /* VIEWS */
+  .view{display:none;padding:44px 0 80px;}
+  .view.active{display:block;}
+
+  /* HERO (home) */
+  .hero{
+    background:linear-gradient(180deg,var(--azul) 0%, var(--azul) 55%, var(--areia) 55%);
+    padding:0 0 60px;
+  }
+  .hero-inner{
+    max-width:1120px;margin:0 auto;padding:56px 24px 0;
+    display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;
+  }
+  .hero h1{color:var(--branco);font-size:clamp(2.2rem,4.4vw,3.6rem);line-height:1.02;}
+  .hero h1 em{color:var(--sol);font-style:normal;}
+  .hero p.lead{color:var(--areia);max-width:46ch;font-size:1.08rem;}
+  .hero-art{background:var(--areia);border:3px solid var(--tinta);border-radius:var(--radius);padding:18px;box-shadow:var(--sombra);}
+  .hero-cta{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:12px 22px;border-radius:var(--radius);font-weight:700;font-size:.95rem;
+    border:2px solid var(--tinta);transition:.15s transform;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn-primary{background:var(--barro);color:var(--branco);}
+  .btn-primary:hover{background:var(--barro-escuro);}
+  .btn-ghost{background:transparent;color:var(--branco);}
+  .btn-ghost:hover{background:rgba(255,249,238,.12);}
+  .btn-dark{background:var(--tinta);color:var(--branco);}
+  .btn-sol{background:var(--sol);color:var(--tinta);}
+
+  section.block{padding:64px 0;border-top:1px solid var(--linha);}
+  .section-head{max-width:60ch;margin-bottom:32px;}
+
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+
+  .card{
+    background:var(--branco);border:2px solid var(--tinta);border-radius:var(--radius);
+    padding:22px;box-shadow:var(--sombra);
+  }
+
+  /* CARDAPIO */
+  .unit-picker{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:30px;}
+  .unit-chip{
+    background:var(--branco);border:2px solid var(--tinta);border-radius:100px;
+    padding:9px 18px;font-weight:700;font-size:.85rem;
+  }
+  .unit-chip.active{background:var(--azul);color:var(--branco);}
+  .unit-info{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--azul);margin-bottom:26px;}
+
+  .menu-category{margin-bottom:38px;}
+  .menu-category h3{border-bottom:3px solid var(--sol);display:inline-block;padding-bottom:4px;}
+  .menu-items{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:18px;}
+  .menu-item{
+    background:var(--branco);border:2px solid var(--tinta);border-radius:var(--radius);
+    padding:16px;display:flex;justify-content:space-between;gap:12px;align-items:flex-start;
+  }
+  .menu-item.special{border-color:var(--barro);background:#FFF3E4;}
+  .menu-item h4{font-size:1.02rem;margin-bottom:2px;}
+  .menu-item p{font-size:.86rem;color:#4a423b;margin:0 0 10px;}
+  .menu-item .price{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--barro-escuro);}
+  .tag-especial{
+    display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.1em;
+    text-transform:uppercase;background:var(--barro);color:var(--branco);padding:2px 8px;border-radius:100px;margin-bottom:8px;
+  }
+  .add-btn{
+    background:var(--tinta);color:var(--branco);border:none;border-radius:var(--radius);
+    padding:8px 12px;font-weight:700;font-size:.8rem;white-space:nowrap;
+  }
+  .add-btn:hover{background:var(--azul);}
+
+  /* CART DRAWER */
+  .drawer-overlay{
+    position:fixed;inset:0;background:rgba(26,21,18,.45);z-index:90;display:none;
+  }
+  .drawer-overlay.active{display:block;}
+  .drawer{
+    position:fixed;top:0;right:0;height:100%;width:min(420px,92vw);background:var(--branco);
+    z-index:91;transform:translateX(100%);transition:transform .25s ease;
+    display:flex;flex-direction:column;border-left:3px solid var(--tinta);
+  }
+  .drawer.active{transform:translateX(0);}
+  .drawer-head{padding:20px;border-bottom:2px solid var(--tinta);display:flex;justify-content:space-between;align-items:center;}
+  .drawer-body{padding:20px;overflow-y:auto;flex:1;}
+  .drawer-foot{padding:20px;border-top:2px solid var(--tinta);}
+  .cart-line{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--linha);}
+  .cart-line .qty-ctrl{display:flex;align-items:center;gap:8px;margin-top:6px;}
+  .qty-ctrl button{width:26px;height:26px;border:2px solid var(--tinta);background:var(--areia);border-radius:4px;font-weight:700;}
+  .remove-link{font-size:.75rem;color:var(--barro);background:none;border:none;text-decoration:underline;padding:0;margin-top:6px;}
+  .close-x{background:none;border:none;font-size:1.4rem;line-height:1;color:var(--tinta);}
+  .coupon-row{display:flex;gap:8px;margin:14px 0;}
+  .coupon-row input{flex:1;padding:9px;border:2px solid var(--tinta);border-radius:4px;font-family:inherit;}
+  .total-row{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:1.05rem;font-weight:700;margin:10px 0;}
+  .discount-row{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--verde);}
+
+  /* FORMS / AUTH */
+  .auth-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;max-width:900px;}
+  .form-card{background:var(--branco);border:2px solid var(--tinta);border-radius:var(--radius);padding:28px;box-shadow:var(--sombra);}
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:.8rem;font-weight:600;margin-bottom:6px;}
+  .field input,.field select{
+    width:100%;padding:10px 12px;border:2px solid var(--tinta);border-radius:4px;font-family:inherit;font-size:.95rem;background:var(--branco);
+  }
+  .msg{padding:10px 14px;border-radius:4px;font-size:.85rem;margin-bottom:14px;font-weight:600;}
+  .msg.ok{background:#E4EEE0;color:var(--verde);border:2px solid var(--verde);}
+  .msg.err{background:#F6DCD3;color:var(--barro-escuro);border:2px solid var(--barro);}
+
+  .locked{
+    text-align:center;padding:70px 24px;background:var(--branco);border:2px dashed var(--tinta);border-radius:var(--radius);
+  }
+
+  /* ORDERS / STATUS */
+  .order-card{background:var(--branco);border:2px solid var(--tinta);border-radius:var(--radius);padding:22px;margin-bottom:20px;}
+  .order-head{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+  .order-head .oid{font-family:'JetBrains Mono',monospace;font-weight:700;}
+  .stepper{display:flex;align-items:center;margin:20px 0;}
+  .step{flex:1;text-align:center;position:relative;}
+  .step .dot{
+    width:26px;height:26px;border-radius:50%;background:var(--areia);border:2px solid var(--tinta);
+    margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;
+  }
+  .step.done .dot{background:var(--verde);color:var(--branco);border-color:var(--verde);}
+  .step.current .dot{background:var(--sol);border-color:var(--tinta);}
+  .step .line{position:absolute;top:12px;left:-50%;width:100%;height:3px;background:var(--linha);z-index:-1;}
+  .step:first-child .line{display:none;}
+  .step.done .line, .step.current .line{background:var(--verde);}
+  .step span.label{font-size:.72rem;font-weight:600;}
+  .order-items-list{font-size:.85rem;color:#4a423b;margin-top:14px;}
+
+  /* PAYMENT */
+  .pay-flow{max-width:640px;margin:0 auto;}
+  .method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0 28px;}
+  .method-card{
+    background:var(--branco);border:2px solid var(--tinta);border-radius:var(--radius);padding:16px;text-align:center;font-weight:700;font-size:.85rem;
+  }
+  .method-card.selected{background:var(--sol);}
+  .method-card input{margin-bottom:8px;}
+  .pay-status{text-align:center;padding:40px 20px;}
+  .spinner{
+    width:44px;height:44px;border:5px solid var(--linha);border-top-color:var(--barro);border-radius:50%;
+    margin:0 auto 18px;animation:spin .8s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  /* LOYALTY */
+  .loyalty-hero{background:var(--azul);color:var(--branco);border-radius:var(--radius);padding:30px;margin-bottom:34px;border:3px solid var(--tinta);}
+  .points-big{font-family:'Fraunces',serif;font-weight:900;font-size:2.6rem;color:var(--sol);}
+  .tier-track{display:flex;gap:6px;margin-top:20px;}
+  .tier-seg{flex:1;height:10px;background:rgba(255,249,238,.2);border-radius:100px;overflow:hidden;}
+  .tier-seg .fill{height:100%;background:var(--sol);}
+  .tier-labels{display:flex;justify-content:space-between;margin-top:8px;font-size:.72rem;font-family:'JetBrains Mono',monospace;color:var(--areia);}
+  .reward-card{display:flex;justify-content:space-between;align-items:center;gap:14px;}
+  .reward-card .cost{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--barro-escuro);white-space:nowrap;}
+
+  /* PROMO */
+  .promo-card{background:var(--branco);border:2px solid var(--tinta);border-radius:var(--radius);overflow:hidden;}
+  .promo-band{background:var(--barro);color:var(--branco);padding:10px 16px;font-family:'JetBrains Mono',monospace;font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;font-weight:700;}
+  .promo-body{padding:18px;}
+  .promo-code{
+    display:inline-block;margin-top:10px;font-family:'JetBrains Mono',monospace;background:var(--areia);
+    border:2px dashed var(--tinta);padding:4px 10px;border-radius:4px;font-weight:700;font-size:.82rem;
+  }
+
+  footer.site{background:var(--tinta);color:var(--areia);padding:40px 0;}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+  footer .eyebrow{color:var(--sol);}
+  footer small{font-family:'JetBrains Mono',monospace;color:#a89a86;}
+
+  @media (max-width:860px){
+    .hero-inner{grid-template-columns:1fr;}
+    .grid-3{grid-template-columns:1fr;}
+    .grid-4{grid-template-columns:1fr 1fr;}
+    .menu-items{grid-template-columns:1fr;}
+    .auth-grid{grid-template-columns:1fr;}
+    .method-grid{grid-template-columns:1fr;}
+    nav.tabs{display:none;}
+    .header-inner{flex-wrap:wrap;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site">
+  <div class="header-inner">
+    <a href="#" class="brand" onclick="switchView('home');return false;">
+      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="20" r="11" fill="var(--sol)" stroke="var(--tinta)" stroke-width="3"/>
+        <path d="M32 4v6M32 30v6M14 20h6M46 20h6M20 8l4 4M44 8l-4 4" stroke="var(--tinta)" stroke-width="3" stroke-linecap="round"/>
+        <path d="M32 30v28M32 34c-6 0-9 4-9 9M32 40c6 0 9 3 9 8M32 46c-5 0-7 3-7 6" stroke="var(--verde)" stroke-width="4" stroke-linecap="round" fill="none"/>
+      </svg>
+      <span class="brand-text"><strong>Raízes do Nordeste</strong><span>Comida da terra, de verdade</span></span>
+    </a>
+    <nav class="tabs">
+      <button data-view="home" onclick="switchView('home')" class="active">Início</button>
+      <button data-view="cardapio" onclick="switchView('cardapio')">Cardápio</button>
+      <button data-view="pedidos" onclick="switchView('pedidos')">Meus Pedidos</button>
+      <button data-view="fidelidade" onclick="switchView('fidelidade')">Fidelidade</button>
+      <button data-view="promocoes" onclick="switchView('promocoes')">Promoções</button>
+    </nav>
+    <div class="header-actions">
+      <button class="cart-btn" onclick="openCart()">Sacola
+        <span class="cart-badge" id="cartCount">0</span>
+      </button>
+      <button class="pill-btn" id="authBtn" onclick="handleAuthBtn()">Entrar</button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HOME ============ -->
+<section class="view active" id="view-home">
+  <div class="hero">
+    <div class="hero-inner">
+      <div>
+        <p class="eyebrow" style="color:var(--sol)">Sabor de raiz · Desde o sertão até sua mesa</p>
+        <h1>O nordeste em <em>cada garfada</em>, direto da nossa cozinha pra sua casa.</h1>
+        <p class="lead">Pratos típicos, feitos como na casa da avó: carne de sol, baião de dois, tapioca quentinha e muito mais. Escolha sua unidade, monte o pedido e acompanhe cada etapa até a entrega.</p>
+        <div class="hero-cta">
+          <button class="btn btn-primary" onclick="switchView('cardapio')">Ver cardápio</button>
+          <button class="btn btn-ghost" onclick="switchView('fidelidade')">Conhecer a fidelidade</button>
+        </div>
+      </div>
+      <div class="hero-art card" style="background:var(--areia);">
+        <svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg">
+          <rect width="300" height="220" fill="#F2E4C9"/>
+          <circle cx="235" cy="45" r="26" fill="var(--sol)" stroke="var(--tinta)" stroke-width="4"/>
+          <g stroke="var(--tinta)" stroke-width="4" stroke-linecap="round">
+            <path d="M235 6v10M235 74v10M196 45h10M264 45h10M206 16l7 7M264 16l-7 7M206 74l7-7M264 74l-7-7"/>
+          </g>
+          <path d="M60 210V90c0-14 12-26 26-26s26 12 26 26v120" fill="none" stroke="var(--verde)" stroke-width="7"/>
+          <path d="M86 120c18 0 26 10 26 22M86 150c-16 0-24 8-24 20" fill="none" stroke="var(--verde)" stroke-width="7" stroke-linecap="round"/>
+          <path d="M40 210h180" stroke="var(--tinta)" stroke-width="4"/>
+          <path d="M120 210c0-30 22-46 40-46s40 16 40 46" fill="var(--barro)" stroke="var(--tinta)" stroke-width="4"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="block">
+      <div class="section-head">
+        <p class="eyebrow">Por que a gente é diferente</p>
+        <h2>Feito na hora, com ingrediente de raiz</h2>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <h3 style="font-size:1.15rem">Receita de família</h3>
+          <p>Pratos passados de geração em geração, sem atalho: carne de sol curada, cuscuz no ponto, tapioca na hora.</p>
+        </div>
+        <div class="card">
+          <h3 style="font-size:1.15rem">Acompanhe seu pedido</h3>
+          <p>Do "recebido" até "entregue", você vê cada etapa em tempo real, direto na plataforma.</p>
+        </div>
+        <div class="card">
+          <h3 style="font-size:1.15rem">Fidelidade que floresce</h3>
+          <p>A cada pedido você cresce no Clube Mandacaru e desbloqueia descontos e mimos de verdade.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+
+<!-- ============ CARDÁPIO ============ -->
+<section class="view" id="view-cardapio">
+  <div class="wrap">
+    <p class="eyebrow">Cardápio por unidade</p>
+    <h2 style="margin-bottom:18px;">O que está sendo servido hoje</h2>
+    <div class="unit-picker" id="unitPicker"></div>
+    <p class="unit-info" id="unitInfo"></p>
+    <div id="menuContainer"></div>
+  </div>
+</section>
+
+<!-- ============ PEDIDOS / STATUS ============ -->
+<section class="view" id="view-pedidos">
+  <div class="wrap">
+    <p class="eyebrow">Acompanhamento</p>
+    <h2>Meus pedidos</h2>
+    <div id="pedidosContainer" style="margin-top:26px;"></div>
+  </div>
+</section>
+
+<!-- ============ FIDELIDADE ============ -->
+<section class="view" id="view-fidelidade">
+  <div class="wrap">
+    <p class="eyebrow">Clube Mandacaru</p>
+    <h2>Seu programa de fidelidade</h2>
+    <div id="fidelidadeContainer" style="margin-top:26px;"></div>
+  </div>
+</section>
+
+<!-- ============ PROMOÇÕES ============ -->
+<section class="view" id="view-promocoes">
+  <div class="wrap">
+    <p class="eyebrow">Por tempo limitado</p>
+    <h2>Promoções e campanhas</h2>
+    <div class="grid-3" style="margin-top:26px;" id="promoContainer"></div>
+  </div>
+</section>
+
+<!-- ============ ENTRAR / CADASTRAR ============ -->
+<section class="view" id="view-auth">
+  <div class="wrap">
+    <p class="eyebrow">Sua conta</p>
+    <h2>Entre ou crie seu cadastro</h2>
+    <div class="auth-grid" style="margin-top:26px;">
+      <div class="form-card">
+        <h3 style="font-size:1.1rem">Já tenho conta</h3>
+        <div id="loginMsg"></div>
+        <form onsubmit="return doLogin(event)">
+          <div class="field"><label>E-mail</label><input type="email" id="loginEmail" required></div>
+          <div class="field"><label>Senha</label><input type="password" id="loginSenha" required></div>
+          <button class="btn btn-primary" type="submit">Entrar</button>
+        </form>
+      </div>
+      <div class="form-card">
+        <h3 style="font-size:1.1rem">Criar cadastro</h3>
+        <div id="signupMsg"></div>
+        <form onsubmit="return doSignup(event)">
+          <div class="field"><label>Nome</label><input type="text" id="suNome" required></div>
+          <div class="field"><label>E-mail</label><input type="email" id="suEmail" required></div>
+          <div class="field"><label>Senha</label><input type="password" id="suSenha" required minlength="4"></div>
+          <div class="field"><label>Unidade preferida</label>
+            <select id="suUnidade">
+              <option value="recife">Recife (PE)</option>
+              <option value="fortaleza">Fortaleza (CE)</option>
+              <option value="salvador">Salvador (BA)</option>
+              <option value="natal">Natal (RN)</option>
+            </select>
+          </div>
+          <button class="btn btn-dark" type="submit">Cadastrar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PAGAMENTO ============ -->
+<section class="view" id="view-pagamento">
+  <div class="wrap">
+    <p class="eyebrow">Finalizar pedido</p>
+    <h2>Pagamento</h2>
+    <div class="pay-flow" style="margin-top:26px;" id="pagamentoContainer"></div>
+  </div>
+</section>
+
+<!-- ============ CART DRAWER ============ -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeCart()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-head">
+    <h3 style="font-size:1.1rem;margin:0;">Sua sacola</h3>
+    <button class="close-x" onclick="closeCart()">&times;</button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+  <div class="drawer-foot">
+    <div class="coupon-row">
+      <input type="text" id="couponInput" placeholder="Cupom de desconto">
+      <button class="btn btn-dark" style="padding:9px 14px" onclick="applyCoupon()">Aplicar</button>
+    </div>
+    <div id="discountLine"></div>
+    <div class="total-row"><span>Total</span><span id="cartTotal">R$ 0,00</span></div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="goCheckout()">Ir para pagamento</button>
+  </div>
+</div>
+
+<footer class="site">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Raízes do Nordeste</p>
+      <small>Projeto acadêmico de demonstração · pagamento simulado, sem cobrança real.</small>
+    </div>
+    <div>
+      <small>Unidades: Recife · Fortaleza · Salvador · Natal</small>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ================= DADOS ================= */
+const UNITS = {
+  recife:   {nome:"Recife (PE)",    endereco:"Rua da Aurora, 210 — Boa Vista",   horario:"11h–22h"},
+  fortaleza:{nome:"Fortaleza (CE)", endereco:"Av. Beira Mar, 880 — Meireles",    horario:"11h–23h"},
+  salvador: {nome:"Salvador (BA)",  endereco:"Ladeira do Pelourinho, 45 — Centro Histórico", horario:"10h–22h"},
+  natal:    {nome:"Natal (RN)",     endereco:"Av. Roberto Freire, 1500 — Ponta Negra", horario:"11h–22h30"},
+};
+
+const MENU_COMUM = [
+  {cat:"Pratos Típicos", itens:[
+    {id:"p1", nome:"Baião de dois", desc:"Arroz, feijão-de-corda, carne seca e queijo coalho.", preco:28},
+    {id:"p2", nome:"Carne de sol com macaxeira e nata", desc:"Carne de sol grelhada, macaxeira cozida e nata fresca.", preco:32},
+    {id:"p3", nome:"Escondidinho de carne seca", desc:"Purê de macaxeira gratinado com carne seca desfiada.", preco:30},
+    {id:"p4", nome:"Cuscuz nordestino com ovo", desc:"Cuscuz de milho, ovo caipira e manteiga de garrafa.", preco:16},
+  ]},
+  {cat:"Lanches & Tapiocas", itens:[
+    {id:"l1", nome:"Tapioca de queijo coalho", desc:"Goma de tapioca recheada com queijo coalho na chapa.", preco:14},
+    {id:"l2", nome:"Acarajé (2 unidades)", desc:"Bolinho de feijão-fradinho frito no azeite de dendê.", preco:18},
+  ]},
+  {cat:"Bebidas", itens:[
+    {id:"b1", nome:"Suco de caju", desc:"Caju maduro batido na hora, sem adição de açúcar.", preco:8},
+    {id:"b2", nome:"Suco de umbu", desc:"Fruta do sertão, doce e levemente ácida.", preco:8},
+    {id:"b3", nome:"Cajuína gelada", desc:"Bebida tradicional do Piauí, feita de caju.", preco:7},
+  ]},
+  {cat:"Doces & Sobremesas", itens:[
+    {id:"d1", nome:"Bolo de rolo (fatia)", desc:"Massa fina enrolada com goiabada cascão.", preco:12},
+    {id:"d2", nome:"Cocada branca", desc:"Coco fresco cozido lentamente no ponto certo.", preco:9},
+    {id:"d3", nome:"Sequilho (porção)", desc:"Biscoitinho de polvilho, crocante por fora, macio por dentro.", preco:10},
+  ]},
+];
+
+const MENU_ESPECIAL = {
+  recife:    {id:"esp-re", nome:"Bolo Souza Leão", desc:"Doce tradicional pernambucano, feito com tapioca e coco.", preco:15},
+  fortaleza: {id:"esp-fo", nome:"Paçoca de carne de sol", desc:"Carne de sol socada com farinha de mandioca, receita cearense.", preco:20},
+  salvador:  {id:"esp-sa", nome:"Acarajé completo com vatapá", desc:"Acarajé recheado com vatapá, caruru e vinagrete.", preco:24},
+  natal:     {id:"esp-na", nome:"Camarão na moranga", desc:"Camarões ao molho cremoso servidos dentro da moranga.", preco:38},
+};
+
+const PROMOCOES = [
+  {titulo:"Semana do São João", desc:"20% de desconto em todos os pratos típicos. Use o cupom no carrinho.", codigo:"SAOJOAO20"},
+  {titulo:"Segunda do Cliente Fiel", desc:"Pontos em dobro no Clube Mandacaru em todos os pedidos feitos às segundas-feiras.", codigo:"—"},
+  {titulo:"Indique um amigo", desc:"Você e seu amigo ganham 50 pontos cada quando ele fizer o primeiro pedido.", codigo:"INDIQUE50"},
+];
+
+const CUPONS = {
+  "SAOJOAO20": 0.20,
+  "INDIQUE50": 0.05,
+};
+
+const RECOMPENSAS = [
+  {id:"r1", nome:"Cupom de 10% de desconto", custo:150},
+  {id:"r2", nome:"Sobremesa grátis (cocada ou sequilho)", custo:200},
+  {id:"r3", nome:"Frete grátis no próximo pedido", custo:250},
+  {id:"r4", nome:"Combo Sertanejo grátis", custo:600},
+];
+
+/* ================= ESTADO (em memória) ================= */
+const state = {
+  user: null,
+  users: [],
+  unit: "recife",
+  cart: [],       // {id,nome,preco,qtd}
+  orders: [],     // {id,items,total,status,statusIndex,unit,createdAt,paymentMethod}
+  points: 0,
+  couponCode: null,
+  couponPct: 0,
+  orderSeq: 1000,
+};
+
+const STATUS_STEPS = ["Recebido","Em preparo","Saiu para entrega","Entregue"];
+
+/* ================= NAVEGAÇÃO ================= */
+function switchView(id){
+  document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+  document.getElementById("view-"+id).classList.add("active");
+  document.querySelectorAll("nav.tabs button").forEach(b=>b.classList.toggle("active", b.dataset.view===id));
+  window.scrollTo({top:0,behavior:"smooth"});
+  if(id==="cardapio") renderMenu();
+  if(id==="pedidos") renderPedidos();
+  if(id==="fidelidade") renderFidelidade();
+  if(id==="promocoes") renderPromocoes();
+}
+
+function handleAuthBtn(){
+  if(state.user){ logout(); } else { switchView("auth"); }
+}
+
+/* ================= AUTENTICAÇÃO ================= */
+function doSignup(e){
+  e.preventDefault();
+  const nome = document.getElementById("suNome").value.trim();
+  const email = document.getElementById("suEmail").value.trim().toLowerCase();
+  const senha = document.getElementById("suSenha").value;
+  const unidade = document.getElementById("suUnidade").value;
+  const msgBox = document.getElementById("signupMsg");
+
+  if(state.users.some(u=>u.email===email)){
+    msgBox.innerHTML = '<div class="msg err">Já existe um cadastro com este e-mail.</div>';
+    return false;
+  }
+  const user = {nome, email, senha, unidade};
+  state.users.push(user);
+  state.user = user;
+  state.unit = unidade;
+  msgBox.innerHTML = '<div class="msg ok">Cadastro criado! Você já está logado.</div>';
+  updateAuthUI();
+  setTimeout(()=>switchView("cardapio"), 700);
+  return false;
+}
+
+function doLogin(e){
+  e.preventDefault();
+  const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+  const senha = document.getElementById("loginSenha").value;
+  const msgBox = document.getElementById("loginMsg");
+  const found = state.users.find(u=>u.email===email && u.senha===senha);
+  if(!found){
+    msgBox.innerHTML = '<div class="msg err">E-mail ou senha incorretos (ou você ainda não se cadastrou).</div>';
+    return false;
+  }
+  state.user = found;
+  state.unit = found.unidade;
+  msgBox.innerHTML = '<div class="msg ok">Login realizado com sucesso!</div>';
+  updateAuthUI();
+  setTimeout(()=>switchView("home"), 500);
+  return false;
+}
+
+function logout(){
+  state.user = null;
+  updateAuthUI();
+  switchView("home");
+}
+
+function updateAuthUI(){
+  const btn = document.getElementById("authBtn");
+  btn.textContent = state.user ? ("Sair (" + state.user.nome.split(" ")[0] + ")") : "Entrar";
+}
+
+/* ================= CARDÁPIO ================= */
+function renderUnitPicker(){
+  const el = document.getElementById("unitPicker");
+  el.innerHTML = Object.keys(UNITS).map(k=>
+    `<button class="unit-chip ${k===state.unit?'active':''}" onclick="selectUnit('${k}')">${UNITS[k].nome}</button>`
+  ).join("");
+}
+
+function selectUnit(k){
+  state.unit = k;
+  renderMenu();
+}
+
+function renderMenu(){
+  renderUnitPicker();
+  const u = UNITS[state.unit];
+  document.getElementById("unitInfo").textContent = `${u.endereco} · Funcionamento: ${u.horario}`;
+
+  let html = "";
+  MENU_COMUM.forEach(bloco=>{
+    html += `<div class="menu-category"><h3>${bloco.cat}</h3><div class="menu-items">`;
+    bloco.itens.forEach(it=>{
+      html += menuItemCard(it,false);
+    });
+    if(bloco.cat==="Pratos Típicos"){
+      const esp = MENU_ESPECIAL[state.unit];
+      html += menuItemCard(esp,true);
+    }
+    html += `</div></div>`;
+  });
+  document.getElementById("menuContainer").innerHTML = html;
+}
+
+function menuItemCard(it,especial){
+  return `<div class="menu-item ${especial?'special':''}">
+    <div>
+      ${especial?'<span class="tag-especial">Especial da unidade</span><br>':''}
+      <h4>${it.nome}</h4>
+      <p>${it.desc}</p>
+      <span class="price">R$ ${it.preco.toFixed(2).replace('.', ',')}</span>
+    </div>
+    <button class="add-btn" onclick="addToCart('${it.id}','${it.nome.replace(/'/g,"\\'")}',${it.preco})">Adicionar</button>
+  </div>`;
+}
+
+/* ================= CARRINHO ================= */
+function addToCart(id,nome,preco){
+  const existing = state.cart.find(i=>i.id===id);
+  if(existing){ existing.qtd++; } else { state.cart.push({id,nome,preco,qtd:1}); }
+  renderCartBadge();
+  renderDrawer();
+  openCart();
+}
+
+function renderCartBadge(){
+  const total = state.cart.reduce((s,i)=>s+i.qtd,0);
+  document.getElementById("cartCount").textContent = total;
+}
+
+function openCart(){
+  renderDrawer();
+  document.getElementById("drawer").classList.add("active");
+  document.getElementById("drawerOverlay").classList.add("active");
+}
+function closeCart(){
+  document.getElementById("drawer").classList.remove("active");
+  document.getElementById("drawerOverlay").classList.remove("active");
+}
+
+function changeQty(id,delta){
+  const item = state.cart.find(i=>i.id===id);
+  if(!item) return;
+  item.qtd += delta;
+  if(item.qtd<=0) state.cart = state.cart.filter(i=>i.id!==id);
+  renderCartBadge();
+  renderDrawer();
+}
+function removeItem(id){
+  state.cart = state.cart.filter(i=>i.id!==id);
+  renderCartBadge();
+  renderDrawer();
+}
+
+function cartSubtotal(){
+  return state.cart.reduce((s,i)=>s+i.preco*i.qtd,0);
+}
+
+function renderDrawer(){
+  const body = document.getElementById("drawerBody");
+  if(state.cart.length===0){
+    body.innerHTML = '<p style="color:#777">Sua sacola está vazia. Vá ao cardápio e adicione algo gostoso!</p>';
+  } else {
+    body.innerHTML = state.cart.map(i=>`
+      <div class="cart-line">
+        <div>
+          <strong>${i.nome}</strong><br>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:.82rem;">R$ ${i.preco.toFixed(2).replace('.', ',')}</span>
+          <div class="qty-ctrl">
+            <button onclick="changeQty('${i.id}',-1)">–</button>
+            <span>${i.qtd}</span>
+            <button onclick="changeQty('${i.id}',1)">+</button>
+          </div>
+          <button class="remove-link" onclick="removeItem('${i.id}')">remover</button>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-weight:700;">R$ ${(i.preco*i.qtd).toFixed(2).replace('.', ',')}</div>
+      </div>
+    `).join("");
+  }
+  const sub = cartSubtotal();
+  const discount = sub * state.couponPct;
+  const total = sub - discount;
+  document.getElementById("discountLine").innerHTML = state.couponPct>0
+    ? `<div class="discount-row"><span>Cupom ${state.couponCode}</span><span>- R$ ${discount.toFixed(2).replace('.', ',')}</span></div>` : "";
+  document.getElementById("cartTotal").textContent = "R$ " + total.toFixed(2).replace('.', ',');
+}
+
+function applyCoupon(){
+  const code = document.getElementById("couponInput").value.trim().toUpperCase();
+  if(CUPONS[code]){
+    state.couponCode = code;
+    state.couponPct = CUPONS[code];
+  } else {
+    state.couponCode = null;
+    state.couponPct = 0;
+    alert("Cupom inválido ou expirado.");
+  }
+  renderDrawer();
+}
+
+function goCheckout(){
+  if(state.cart.length===0){ alert("Sua sacola está vazia."); return; }
+  if(!state.user){
+    closeCart();
+    switchView("auth");
+    alert("Faça login ou cadastre-se para finalizar o pedido.");
+    return;
+  }
+  closeCart();
+  switchView("pagamento");
+  renderPagamento();
+}
+
+/* ================= PAGAMENTO (simulado) ================= */
+function renderPagamento(){
+  const sub = cartSubtotal();
+  const discount = sub * state.couponPct;
+  const total = sub - discount;
+  document.getElementById("pagamentoContainer").innerHTML = `
+    <div class="card" style="margin-bottom:24px;">
+      <h3 style="font-size:1.05rem">Resumo do pedido</h3>
+      ${state.cart.map(i=>`<div style="display:flex;justify-content:space-between;font-size:.9rem;padding:4px 0;"><span>${i.qtd}x ${i.nome}</span><span>R$ ${(i.preco*i.qtd).toFixed(2).replace('.', ',')}</span></div>`).join("")}
+      ${state.couponPct>0?`<div class="discount-row" style="margin-top:8px;"><span>Cupom ${state.couponCode}</span><span>- R$ ${discount.toFixed(2).replace('.', ',')}</span></div>`:""}
+      <div class="total-row"><span>Total</span><span>R$ ${total.toFixed(2).replace('.', ',')}</span></div>
+    </div>
+    <h3 style="font-size:1.05rem">Como você quer pagar?</h3>
+    <p style="font-size:.85rem;color:#4a423b;">O pagamento é processado por um serviço externo parceiro (simulação — nenhuma cobrança real é feita).</p>
+    <form onsubmit="return submitPayment(event, ${total})">
+      <div class="method-grid">
+        <label class="method-card" id="mCardPix"><input type="radio" name="metodo" value="Pix" onchange="selectMethod('mCardPix')" required><br>Pix</label>
+        <label class="method-card" id="mCardCartao"><input type="radio" name="metodo" value="Cartão de crédito" onchange="selectMethod('mCardCartao')"><br>Cartão de crédito</label>
+        <label class="method-card" id="mCardCarteira"><input type="radio" name="metodo" value="Carteira digital" onchange="selectMethod('mCardCarteira')"><br>Carteira digital</label>
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;" type="submit">Enviar para pagamento externo</button>
+    </form>
+    <div id="payResult"></div>
+  `;
+}
+
+function selectMethod(id){
+  document.querySelectorAll(".method-card").forEach(c=>c.classList.remove("selected"));
+  document.getElementById(id).classList.add("selected");
+}
+
+async function submitPayment(e, total){
+  e.preventDefault();
+  const metodo = document.querySelector('input[name="metodo"]:checked').value;
+  const resultBox = document.getElementById("payResult");
+  document.querySelector('.pay-flow form button[type=submit]').disabled = true;
+
+  resultBox.innerHTML = `<div class="pay-status"><div class="spinner"></div><p>Redirecionando para o parceiro de pagamento <strong>NordestePay</strong>...</p></div>`;
+  await wait(1400);
+  resultBox.innerHTML = `<div class="pay-status"><div class="spinner"></div><p>Aguardando confirmação do parceiro externo...</p></div>`;
+  await wait(1400);
+
+  // cria o pedido
+  const orderId = "RN-" + (state.orderSeq++);
+  const pointsEarned = Math.round(total);
+  const order = {
+    id:orderId,
+    items:[...state.cart],
+    total,
+    status:STATUS_STEPS[0],
+    statusIndex:0,
+    unit:state.unit,
+    createdAt:new Date(),
+    paymentMethod:metodo,
+  };
+  state.orders.unshift(order);
+  state.points += pointsEarned;
+  state.cart = [];
+  state.couponCode = null;
+  state.couponPct = 0;
+  renderCartBadge();
+
+  resultBox.innerHTML = `
+    <div class="pay-status">
+      <div style="font-size:2.4rem;">✅</div>
+      <h3 style="font-size:1.2rem;margin-top:10px;">Pagamento aprovado pelo parceiro externo</h3>
+      <p style="font-family:'JetBrains Mono',monospace;">Pedido ${orderId} · ${metodo}</p>
+      <p>Você ganhou <strong>${pointsEarned} pontos</strong> no Clube Mandacaru.</p>
+      <button class="btn btn-primary" onclick="switchView('pedidos')">Acompanhar meu pedido</button>
+    </div>
+  `;
+  startOrderProgress(order);
+}
+
+function wait(ms){ return new Promise(r=>setTimeout(r,ms)); }
+
+/* progresso automático do pedido (simulação de status) */
+function startOrderProgress(order){
+  const interval = setInterval(()=>{
+    if(order.statusIndex >= STATUS_STEPS.length-1){ clearInterval(interval); return; }
+    order.statusIndex++;
+    order.status = STATUS_STEPS[order.statusIndex];
+    if(document.getElementById("view-pedidos").classList.contains("active")) renderPedidos();
+  }, 9000);
+}
+
+/* ================= PEDIDOS / STATUS ================= */
+function renderPedidos(){
+  const box = document.getElementById("pedidosContainer");
+  if(!state.user){
+    box.innerHTML = `<div class="locked"><h3>Faça login para ver seus pedidos</h3><p>Entre com sua conta para acompanhar o status em tempo real.</p><button class="btn btn-primary" onclick="switchView('auth')">Entrar / Cadastrar</button></div>`;
+    return;
+  }
+  if(state.orders.length===0){
+    box.innerHTML = `<div class="locked"><h3>Você ainda não fez nenhum pedido</h3><p>Que tal experimentar um baião de dois?</p><button class="btn btn-primary" onclick="switchView('cardapio')">Ver cardápio</button></div>`;
+    return;
+  }
+  box.innerHTML = state.orders.map(o=>`
+    <div class="order-card">
+      <div class="order-head">
+        <span class="oid">${o.id} · ${UNITS[o.unit].nome}</span>
+        <span>${o.createdAt.toLocaleString('pt-BR')}</span>
+      </div>
+      <div class="stepper">
+        ${STATUS_STEPS.map((s,i)=>`
+          <div class="step ${i<o.statusIndex?'done':(i===o.statusIndex?'current':'')}">
+            <div class="line"></div>
+            <div class="dot">${i<o.statusIndex?'✓':(i+1)}</div>
+            <span class="label">${s}</span>
+          </div>
+        `).join("")}
+      </div>
+      <div class="order-items-list">
+        ${o.items.map(i=>`${i.qtd}x ${i.nome}`).join(" · ")}
+        <br><strong>Total: R$ ${o.total.toFixed(2).replace('.', ',')}</strong> · Pagamento: ${o.paymentMethod}
+      </div>
+    </div>
+  `).join("");
+}
+
+/* ================= FIDELIDADE ================= */
+function tierInfo(points){
+  if(points < 200) return {nome:"Broto", min:0, max:200, next:"Flor de Mandacaru"};
+  if(points < 500) return {nome:"Flor de Mandacaru", min:200, max:500, next:"Xique-Xique"};
+  return {nome:"Xique-Xique", min:500, max:500, next:null};
+}
+
+function renderFidelidade(){
+  const box = document.getElementById("fidelidadeContainer");
+  if(!state.user){
+    box.innerHTML = `<div class="locked"><h3>Faça login para ver seus pontos</h3><p>Cadastre-se para começar a florescer no Clube Mandacaru.</p><button class="btn btn-primary" onclick="switchView('auth')">Entrar / Cadastrar</button></div>`;
+    return;
+  }
+  const t = tierInfo(state.points);
+  const pct = t.max>t.min ? Math.min(100, Math.round(((state.points-t.min)/(t.max-t.min))*100)) : 100;
+
+  box.innerHTML = `
+    <div class="loyalty-hero">
+      <p class="eyebrow" style="color:var(--sol)">Nível atual</p>
+      <h3 style="color:var(--branco);font-size:1.6rem;">${t.nome}</h3>
+      <div class="points-big">${state.points} pts</div>
+      <div class="tier-track"><div class="tier-seg"><div class="fill" style="width:${pct}%"></div></div></div>
+      <div class="tier-labels"><span>${t.nome}</span><span>${t.next ? t.next : "Nível máximo"}</span></div>
+    </div>
+    <h3 style="font-size:1.1rem;margin-bottom:14px;">Como funciona o Clube Mandacaru</h3>
+    <p style="max-width:70ch;margin-bottom:26px;">Assim como o mandacaru floresce mesmo no sertão seco, sua fidelidade cresce a cada pedido. Você ganha 1 ponto para cada R$ 1 gasto e sobe de nível: <strong>Broto</strong> (0–199 pts), <strong>Flor de Mandacaru</strong> (200–499 pts, 10% de desconto em doces) e <strong>Xique-Xique</strong> (500+ pts, frete grátis e brinde mensal).</p>
+    <h3 style="font-size:1.1rem;margin-bottom:14px;">Trocar pontos por recompensas</h3>
+    <div class="grid-3" id="rewardsGrid"></div>
+  `;
+  const grid = document.getElementById("rewardsGrid");
+  grid.innerHTML = RECOMPENSAS.map(r=>`
+    <div class="card reward-card">
+      <div>
+        <strong>${r.nome}</strong><br>
+        <span style="font-size:.8rem;color:#4a423b;">${r.custo} pontos</span>
+      </div>
+      <button class="btn ${state.points>=r.custo?'btn-primary':'btn-ghost'}" style="color:${state.points>=r.custo?'':'#999'};border-color:${state.points>=r.custo?'var(--tinta)':'#ccc'};" ${state.points>=r.custo?'':'disabled'} onclick="redeemReward('${r.id}',${r.custo},'${r.nome.replace(/'/g,"\\'")}')">Resgatar</button>
+    </div>
+  `).join("");
+}
+
+function redeemReward(id,custo,nome){
+  if(state.points < custo) return;
+  state.points -= custo;
+  alert(`Recompensa resgatada: ${nome}! Pontos restantes: ${state.points}.`);
+  renderFidelidade();
+}
+
+/* ================= PROMOÇÕES ================= */
+function renderPromocoes(){
+  document.getElementById("promoContainer").innerHTML = PROMOCOES.map(p=>`
+    <div class="promo-card">
+      <div class="promo-band">Campanha ativa</div>
+      <div class="promo-body">
+        <h3 style="font-size:1.1rem;">${p.titulo}</h3>
+        <p>${p.desc}</p>
+        ${p.codigo!=="—" ? `<span class="promo-code">${p.codigo}</span>` : ""}
+      </div>
+    </div>
+  `).join("");
+}
+
+/* ================= INIT ================= */
+document.querySelectorAll("nav.tabs button").forEach(b=>{});
+renderMenu();
+renderCartBadge();
+updateAuthUI();
+</script>
+</body>
+</html>
