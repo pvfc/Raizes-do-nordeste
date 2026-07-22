@@ -265,6 +265,21 @@
   footer .eyebrow{color:var(--sol);}
   footer small{font-family:'JetBrains Mono',monospace;color:#a89a86;}
 
+  /* AVISO DE COOKIES */
+  .cookie-banner{
+    position:fixed;left:20px;right:20px;bottom:20px;z-index:200;
+    display:flex;align-items:center;justify-content:space-between;gap:20px;
+    max-width:860px;margin:0 auto;padding:18px 20px;
+    background:var(--branco);color:var(--tinta);border:2px solid var(--tinta);
+    border-radius:var(--radius);box-shadow:var(--sombra);
+  }
+  .cookie-banner strong{font-family:'Fraunces',serif;font-size:1.1rem;}
+  .cookie-banner p{margin:4px 0 0;font-size:.88rem;}
+  .cookie-actions{display:flex;gap:10px;flex-shrink:0;}
+  .cookie-actions .btn{padding:9px 14px;}
+  .cookie-actions .btn-secondary{background:var(--areia);color:var(--tinta);}
+  .cookie-banner[hidden]{display:none;}
+
   @media (max-width:860px){
     .hero-inner{grid-template-columns:1fr;}
     .grid-3{grid-template-columns:1fr;}
@@ -274,10 +289,23 @@
     .method-grid{grid-template-columns:1fr;}
     nav.tabs{display:none;}
     .header-inner{flex-wrap:wrap;}
+    .cookie-banner{left:12px;right:12px;bottom:12px;align-items:flex-start;flex-direction:column;}
   }
 </style>
 </head>
 <body>
+
+<!-- ============ AVISO DE COOKIES ============ -->
+<aside id="cookieBanner" class="cookie-banner" role="dialog" aria-label="Preferências de cookies" aria-live="polite">
+  <div>
+    <strong>Usamos cookies</strong>
+    <p>Usamos cookies essenciais para o funcionamento do site e para melhorar sua experiência.</p>
+  </div>
+  <div class="cookie-actions">
+    <button type="button" class="btn btn-secondary" onclick="recusarCookies()">Recusar</button>
+    <button type="button" class="btn btn-primary" onclick="aceitarCookies()">Aceitar</button>
+  </div>
+</aside>
 
 <!-- ============ HEADER ============ -->
 <header class="site">
@@ -452,11 +480,16 @@
   </div>
   <div class="drawer-body" id="drawerBody"></div>
   <div class="drawer-foot">
+    <div class="field" style="margin-bottom:12px;">
+      <label for="deliveryAddress">Endereço de entrega</label>
+      <input type="text" id="deliveryAddress" placeholder="Rua, número, bairro e complemento" oninput="state.deliveryAddress=this.value">
+    </div>
     <div class="coupon-row">
       <input type="text" id="couponInput" placeholder="Cupom de desconto">
       <button class="btn btn-dark" style="padding:9px 14px" onclick="applyCoupon()">Aplicar</button>
     </div>
     <div id="discountLine"></div>
+    <div class="discount-row" style="color:var(--tinta);"><span>Taxa de entrega</span><span id="deliveryFee">R$ 0,00</span></div>
     <div class="total-row"><span>Total</span><span id="cartTotal">R$ 0,00</span></div>
     <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="goCheckout()">Ir para pagamento</button>
   </div>
@@ -532,6 +565,8 @@ const RECOMPENSAS = [
 ];
 
 /* ================= ESTADO (em memória) ================= */
+const TAXA_ENTREGA = 8;
+
 const state = {
   user: null,
   users: [],
@@ -541,6 +576,7 @@ const state = {
   points: 0,
   couponCode: null,
   couponPct: 0,
+  deliveryAddress: "",
   orderSeq: 1000,
 };
 
@@ -712,6 +748,8 @@ function cartSubtotal(){
 
 function renderDrawer(){
   const body = document.getElementById("drawerBody");
+  const addressInput = document.getElementById("deliveryAddress");
+  if(addressInput) addressInput.value = state.deliveryAddress;
   if(state.cart.length===0){
     body.innerHTML = '<p style="color:#777">Sua sacola está vazia. Vá ao cardápio e adicione algo gostoso!</p>';
   } else {
@@ -733,9 +771,11 @@ function renderDrawer(){
   }
   const sub = cartSubtotal();
   const discount = sub * state.couponPct;
-  const total = sub - discount;
+  const deliveryFee = state.cart.length ? TAXA_ENTREGA : 0;
+  const total = sub - discount + deliveryFee;
   document.getElementById("discountLine").innerHTML = state.couponPct>0
     ? `<div class="discount-row"><span>Cupom ${state.couponCode}</span><span>- R$ ${discount.toFixed(2).replace('.', ',')}</span></div>` : "";
+  document.getElementById("deliveryFee").textContent = "R$ " + deliveryFee.toFixed(2).replace('.', ',');
   document.getElementById("cartTotal").textContent = "R$ " + total.toFixed(2).replace('.', ',');
 }
 
@@ -754,6 +794,12 @@ function applyCoupon(){
 
 function goCheckout(){
   if(state.cart.length===0){ alert("Sua sacola está vazia."); return; }
+  state.deliveryAddress = document.getElementById("deliveryAddress").value.trim();
+  if(!state.deliveryAddress){
+    alert("Informe o endereço de entrega para continuar.");
+    document.getElementById("deliveryAddress").focus();
+    return;
+  }
   if(!state.user){
     closeCart();
     switchView("auth");
@@ -769,12 +815,15 @@ function goCheckout(){
 function renderPagamento(){
   const sub = cartSubtotal();
   const discount = sub * state.couponPct;
-  const total = sub - discount;
+  const deliveryFee = TAXA_ENTREGA;
+  const total = sub - discount + deliveryFee;
   document.getElementById("pagamentoContainer").innerHTML = `
     <div class="card" style="margin-bottom:24px;">
       <h3 style="font-size:1.05rem">Resumo do pedido</h3>
       ${state.cart.map(i=>`<div style="display:flex;justify-content:space-between;font-size:.9rem;padding:4px 0;"><span>${i.qtd}x ${i.nome}</span><span>R$ ${(i.preco*i.qtd).toFixed(2).replace('.', ',')}</span></div>`).join("")}
       ${state.couponPct>0?`<div class="discount-row" style="margin-top:8px;"><span>Cupom ${state.couponCode}</span><span>- R$ ${discount.toFixed(2).replace('.', ',')}</span></div>`:""}
+      <div style="display:flex;justify-content:space-between;font-size:.9rem;padding:8px 0;"><span>Taxa de entrega</span><span>R$ ${deliveryFee.toFixed(2).replace('.', ',')}</span></div>
+      <p style="font-size:.85rem;margin:8px 0 0;"><strong>Entregar em:</strong><br>${state.deliveryAddress}</p>
       <div class="total-row"><span>Total</span><span>R$ ${total.toFixed(2).replace('.', ',')}</span></div>
     </div>
     <h3 style="font-size:1.05rem">Como você quer pagar?</h3>
@@ -814,6 +863,8 @@ async function submitPayment(e, total){
     id:orderId,
     items:[...state.cart],
     total,
+    deliveryFee,
+    deliveryAddress: state.deliveryAddress,
     status:STATUS_STEPS[0],
     statusIndex:0,
     unit:state.unit,
@@ -933,6 +984,21 @@ function redeemReward(id,custo,nome){
   renderFidelidade();
 }
 
+/* ================= COOKIES ================= */
+function salvarPreferenciaCookies(preferencia){
+  localStorage.setItem("preferenciaCookies", preferencia);
+  document.getElementById("cookieBanner").hidden = true;
+}
+
+function aceitarCookies(){ salvarPreferenciaCookies("aceito"); }
+function recusarCookies(){ salvarPreferenciaCookies("recusado"); }
+
+function carregarPreferenciaCookies(){
+  if(localStorage.getItem("preferenciaCookies")){
+    document.getElementById("cookieBanner").hidden = true;
+  }
+}
+
 /* ================= PROMOÇÕES ================= */
 function renderPromocoes(){
   document.getElementById("promoContainer").innerHTML = PROMOCOES.map(p=>`
@@ -954,6 +1020,7 @@ carregarLogin();
 renderMenu();
 renderCartBadge();
 updateAuthUI();
+carregarPreferenciaCookies();
 </script>
 </body>
 </html>
