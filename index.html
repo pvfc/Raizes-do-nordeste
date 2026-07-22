@@ -544,6 +544,11 @@ const state = {
   orderSeq: 1000,
 };
 
+
+function salvarUsuarios(){localStorage.setItem("usuarios",JSON.stringify(state.users));}
+function carregarUsuarios(){const d=localStorage.getItem("usuarios");if(d)state.users=JSON.parse(d);}
+function carregarLogin(){const u=localStorage.getItem("usuarioLogado");if(u){state.user=JSON.parse(u);state.unit=state.user.unidade;}}
+
 const STATUS_STEPS = ["Recebido","Em preparo","Saiu para entrega","Entregue"];
 
 /* ================= NAVEGAÇÃO ================= */
@@ -577,7 +582,9 @@ function doSignup(e){
   }
   const user = {nome, email, senha, unidade};
   state.users.push(user);
+  salvarUsuarios();
   state.user = user;
+  localStorage.setItem('usuarioLogado',JSON.stringify(user));
   state.unit = unidade;
   msgBox.innerHTML = '<div class="msg ok">Cadastro criado! Você já está logado.</div>';
   updateAuthUI();
@@ -596,6 +603,7 @@ function doLogin(e){
     return false;
   }
   state.user = found;
+  localStorage.setItem('usuarioLogado',JSON.stringify(found));
   state.unit = found.unidade;
   msgBox.innerHTML = '<div class="msg ok">Login realizado com sucesso!</div>';
   updateAuthUI();
@@ -605,6 +613,7 @@ function doLogin(e){
 
 function logout(){
   state.user = null;
+  localStorage.removeItem('usuarioLogado');
   updateAuthUI();
   switchView("home");
 }
@@ -940,6 +949,8 @@ function renderPromocoes(){
 
 /* ================= INIT ================= */
 document.querySelectorAll("nav.tabs button").forEach(b=>{});
+carregarUsuarios();
+carregarLogin();
 renderMenu();
 renderCartBadge();
 updateAuthUI();
