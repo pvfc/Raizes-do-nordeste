@@ -134,7 +134,7 @@
   .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
 
   .card{
-    background:var(--branco);border:2px solid var(--tinta);border-radius:var(--radius);
+    background:var(--branco);border:3px solid var(--tinta);border-radius:var(--radius);
     padding:22px;box-shadow:var(--sombra);
   }
 
@@ -356,7 +356,18 @@
     .menu-items{grid-template-columns:1fr;}
     .auth-grid{grid-template-columns:1fr;}
     .method-grid{grid-template-columns:1fr;}
-    nav.tabs{display:none;}
+    nav.tabs{
+      display:flex;
+      width:100%;
+      order:3;
+      overflow-x:auto;
+      -webkit-overflow-scrolling:touch;
+      padding:8px 24px 4px;
+      gap:6px;
+      scrollbar-width:none;
+    }
+    nav.tabs::-webkit-scrollbar{display:none;}
+    nav.tabs button{flex:none;white-space:nowrap;font-size:.8rem;padding:7px 12px;}
     .header-inner{flex-wrap:wrap;}
     .hero-inner{padding-top:48px;gap:32px;}
     .hero-art{transform:none;}
@@ -1127,7 +1138,7 @@ function renderFidelidade(){
       <p class="eyebrow" style="color:var(--sol)">Nível atual</p>
       <h3 style="color:var(--branco);font-size:1.6rem;">${t.nome}</h3>
       <div class="points-big">${state.points} pts</div>
-      <div class="tier-track"><div class="tier-seg"><div class="fill" style="width:${pct}%"></div></div></div>
+      <div class="tier-track"><div class="fill" style="width:${pct}%"></div></div>
       <div class="tier-labels"><span>${t.nome}</span><span>${t.next ? t.next : "Nível máximo"}</span></div>
     </div>
     <h3 style="font-size:1.1rem;margin-bottom:14px;">Como funciona o Clube Mandacaru</h3>
