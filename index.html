@@ -504,7 +504,13 @@
       <button data-view="fidelidade" onclick="switchView('fidelidade')">Fidelidade</button>
       <button data-view="promocoes" onclick="switchView('promocoes')">Promoções</button>
     </nav>
-   
+    <div class="header-actions">
+      
+      <button class="cart-btn" onclick="openCart()">Sacola
+        <span class="cart-badge" id="cartCount">0</span>
+      </button>
+      <button class="pill-btn" id="authBtn" onclick="handleAuthBtn()">Entrar</button>
+    </div>
   </div>
 </header>
 
