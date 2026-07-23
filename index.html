@@ -152,7 +152,20 @@
   .menu-items{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:18px;}
   .menu-item{
     background:var(--branco);border:2px solid var(--tinta);border-radius:var(--radius);
-    padding:16px;display:flex;justify-content:space-between;gap:12px;align-items:flex-start;
+    padding:16px;display:flex;gap:12px;align-items:flex-start;
+  }
+  .menu-item .add-btn{align-self:center;}
+  .menu-item-img{
+    width:56px;height:56px;flex:none;border-radius:10px;object-fit:cover;
+    border:1px solid rgba(26,21,18,.15);background:var(--areia-2);
+  }
+  .menu-item-img.img-missing{
+    background:var(--areia-2);
+    background-image:
+      linear-gradient(45deg, rgba(26,21,18,.06) 25%, transparent 25%, transparent 75%, rgba(26,21,18,.06) 75%),
+      linear-gradient(45deg, rgba(26,21,18,.06) 25%, transparent 25%, transparent 75%, rgba(26,21,18,.06) 75%);
+    background-size:10px 10px;
+    background-position:0 0, 5px 5px;
   }
   .menu-item.special{border-color:var(--barro);background:#FFF3E4;}
   .menu-item h4{font-size:1.02rem;margin-bottom:2px;}
@@ -500,12 +513,13 @@
     <nav class="tabs">
       <button data-view="home" onclick="switchView('home')" class="active">Início</button>
       <button data-view="cardapio" onclick="switchView('cardapio')">Cardápio</button>
-     <button data-view="fidelidade" onclick="switchView('fidelidade')">Fidelidade</button>
-     <button data-view="promocoes" onclick="switchView('promocoes')">Promoções</button>
+      <button data-view="pedidos" onclick="switchView('pedidos')">Meus Pedidos</button>
+      <button data-view="fidelidade" onclick="switchView('fidelidade')">Fidelidade</button>
+      <button data-view="promocoes" onclick="switchView('promocoes')">Promoções</button>
     </nav>
     <div class="header-actions">
-     
-      <button class="cart-btn" onclick="openCart()">Pedidos
+      <button class="back-menu-btn" onclick="switchView('home')" aria-label="Voltar ao menu principal"> Menu</button>
+      <button class="cart-btn" onclick="openCart()">Sacola
         <span class="cart-badge" id="cartCount">0</span>
       </button>
       <button class="pill-btn" id="authBtn" onclick="handleAuthBtn()">Entrar</button>
@@ -698,32 +712,32 @@ const UNITS = {
 
 const MENU_COMUM = [
   {cat:"Pratos Típicos", itens:[
-    {id:"p1", nome:"Baião de dois", desc:"Arroz, feijão-de-corda, carne seca e queijo coalho.", preco:28},
-    {id:"p2", nome:"Carne de sol com macaxeira e nata", desc:"Carne de sol grelhada, macaxeira cozida e nata fresca.", preco:32},
-    {id:"p3", nome:"Escondidinho de carne seca", desc:"Purê de macaxeira gratinado com carne seca desfiada.", preco:30},
-    {id:"p4", nome:"Cuscuz nordestino com ovo", desc:"Cuscuz de milho, ovo caipira e manteiga de garrafa.", preco:16},
+    {id:"p1", nome:"Baião de dois", desc:"Arroz, feijão-de-corda, carne seca e queijo coalho.", preco:28, img:"images/baiao-de-dois.jpg"},
+    {id:"p2", nome:"Carne de sol com macaxeira e nata", desc:"Carne de sol grelhada, macaxeira cozida e nata fresca.", preco:32, img:"images/carne-de-sol.jpg"},
+    {id:"p3", nome:"Escondidinho de carne seca", desc:"Purê de macaxeira gratinado com carne seca desfiada.", preco:30, img:"images/escondidinho.jpg"},
+    {id:"p4", nome:"Cuscuz nordestino com ovo", desc:"Cuscuz de milho, ovo caipira e manteiga de garrafa.", preco:16, img:"images/cuscuz.jpg"},
   ]},
   {cat:"Lanches & Tapiocas", itens:[
-    {id:"l1", nome:"Tapioca de queijo coalho", desc:"Goma de tapioca recheada com queijo coalho na chapa.", preco:14},
-    {id:"l2", nome:"Acarajé (2 unidades)", desc:"Bolinho de feijão-fradinho frito no azeite de dendê.", preco:18},
+    {id:"l1", nome:"Tapioca de queijo coalho", desc:"Goma de tapioca recheada com queijo coalho na chapa.", preco:14, img:"images/tapioca.jpg"},
+    {id:"l2", nome:"Acarajé (2 unidades)", desc:"Bolinho de feijão-fradinho frito no azeite de dendê.", preco:18, img:"images/acaraje.jpg"},
   ]},
   {cat:"Bebidas", itens:[
-    {id:"b1", nome:"Suco de caju", desc:"Caju maduro batido na hora, sem adição de açúcar.", preco:8},
-    {id:"b2", nome:"Suco de umbu", desc:"Fruta do sertão, doce e levemente ácida.", preco:8},
-    {id:"b3", nome:"Cajuína gelada", desc:"Bebida tradicional do Piauí, feita de caju.", preco:7},
+    {id:"b1", nome:"Suco de caju", desc:"Caju maduro batido na hora, sem adição de açúcar.", preco:8, img:"images/suco-caju.jpg"},
+    {id:"b2", nome:"Suco de umbu", desc:"Fruta do sertão, doce e levemente ácida.", preco:8, img:"images/suco-umbu.jpg"},
+    {id:"b3", nome:"Cajuína gelada", desc:"Bebida tradicional do Piauí, feita de caju.", preco:7, img:"images/cajuina.jpg"},
   ]},
   {cat:"Doces & Sobremesas", itens:[
-    {id:"d1", nome:"Bolo de rolo (fatia)", desc:"Massa fina enrolada com goiabada cascão.", preco:12},
-    {id:"d2", nome:"Cocada branca", desc:"Coco fresco cozido lentamente no ponto certo.", preco:9},
-    {id:"d3", nome:"Sequilho (porção)", desc:"Biscoitinho de polvilho, crocante por fora, macio por dentro.", preco:10},
+    {id:"d1", nome:"Bolo de rolo (fatia)", desc:"Massa fina enrolada com goiabada cascão.", preco:12, img:"images/bolo-de-rolo.jpg"},
+    {id:"d2", nome:"Cocada branca", desc:"Coco fresco cozido lentamente no ponto certo.", preco:9, img:"images/cocada.jpg"},
+    {id:"d3", nome:"Sequilho (porção)", desc:"Biscoitinho de polvilho, crocante por fora, macio por dentro.", preco:10, img:"images/sequilho.jpg"},
   ]},
 ];
 
 const MENU_ESPECIAL = {
-  recife:    {id:"esp-re", nome:"Bolo Souza Leão", desc:"Doce tradicional pernambucano, feito com tapioca e coco.", preco:15},
-  fortaleza: {id:"esp-fo", nome:"Paçoca de carne de sol", desc:"Carne de sol socada com farinha de mandioca, receita cearense.", preco:20},
-  salvador:  {id:"esp-sa", nome:"Acarajé completo com vatapá", desc:"Acarajé recheado com vatapá, caruru e vinagrete.", preco:24},
-  natal:     {id:"esp-na", nome:"Camarão na moranga", desc:"Camarões ao molho cremoso servidos dentro da moranga.", preco:38},
+  recife:    {id:"esp-re", nome:"Bolo Souza Leão", desc:"Doce tradicional pernambucano, feito com tapioca e coco.", preco:15, img:"images/bolo-souza-leao.jpg"},
+  fortaleza: {id:"esp-fo", nome:"Paçoca de carne de sol", desc:"Carne de sol socada com farinha de mandioca, receita cearense.", preco:20, img:"images/pacoca-carne-sol.jpg"},
+  salvador:  {id:"esp-sa", nome:"Acarajé completo com vatapá", desc:"Acarajé recheado com vatapá, caruru e vinagrete.", preco:24, img:"images/acaraje-vatapa.jpg"},
+  natal:     {id:"esp-na", nome:"Camarão na moranga", desc:"Camarões ao molho cremoso servidos dentro da moranga.", preco:38, img:"images/camarao-moranga.jpg"},
 };
 
 const PROMOCOES = [
@@ -874,7 +888,9 @@ function renderMenu(){
 
 function menuItemCard(it,especial){
   return `<div class="menu-item ${especial?'special':''}">
-    <div>
+    <img class="menu-item-img" src="${it.img}" alt="${it.nome}"
+      onerror="this.onerror=null;this.src='';this.classList.add('img-missing');">
+    <div style="flex:1;">
       ${especial?'<span class="tag-especial">Especial da unidade</span><br>':''}
       <h4>${it.nome}</h4>
       <p>${it.desc}</p>
