@@ -278,7 +278,7 @@
   footer .eyebrow{color:var(--sol);}
   footer small{font-family:'JetBrains Mono',monospace;color:#a89a86;}
 
-  /* ---------- VISUAL MAIS MODERNO ---------- */
+                                /* ---- VISUAL MAIS MODERNO ---- */
   body{
     background:
       radial-gradient(circle at 8% 8%, rgba(232,169,59,.22), transparent 28rem),
@@ -347,7 +347,7 @@
   .cookie-banner{border:1px solid rgba(26,21,18,.12);border-radius:16px;box-shadow:0 18px 50px rgba(26,21,18,.22);}
   footer.site{margin-top:24px;}
 
-  /* AVISO DE COOKIES */
+                                   /* AVISO DE COOKIES */
   .cookie-banner{
     position:fixed;left:20px;right:20px;bottom:20px;z-index:200;
     display:flex;align-items:center;justify-content:space-between;gap:20px;
@@ -386,7 +386,7 @@
     .hero-art{transform:none;}
     .cookie-banner{left:12px;right:12px;bottom:12px;align-items:flex-start;flex-direction:column;}
   }
-/* Container flutuante */
+                                      /* Container flutuante */
   .whatsapp-float {
   position: fixed;
   bottom: 30px;
@@ -398,7 +398,7 @@
   gap: 8px;
 }
 
-/* Balão de texto */
+                                           /* Balão de texto */
 .whatsapp-bubble {
   background: #fff;
   color: #333;
@@ -419,7 +419,7 @@
   transform: translateY(0);
 }
 
-/* Botão circular */
+                                           /* Botão circular */
 .whatsapp-btn {
   width: 60px;
   height: 60px;
@@ -440,14 +440,14 @@
   box-shadow: 0 8px 25px rgba(37, 211, 102, 0.6);
 }
 
-/* Ícone do WhatsApp */
+                                   /* Ícone do WhatsApp */
 .whatsapp-btn svg {
   width: 32px;
   height: 32px;
   fill: #fff;
 }
 
-/* Animação de pulso */
+                                 /* Animação de pulso */
 .whatsapp-btn::before {
   content: '';
   position: absolute;
@@ -479,16 +479,25 @@
 
 
 
-<!-- ============ HEADER ============ -->
+                          <!-- ===== HEADER ============ -->
 <header class="site">
   <div class="header-inner">
     <a href="#" class="brand" onclick="switchView('home');return false;">
-      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 64 64" fill="none" xmlns="  http://www.w3.org/2000/svg">
         <circle cx="32" cy="20" r="11" fill="var(--sol)" stroke="var(--tinta)" stroke-width="3"/>
         <path d="M32 4v6M32 30v6M14 20h6M46 20h6M20 8l4 4M44 8l-4 4" stroke="var(--tinta)" stroke-width="3" stroke-linecap="round"/>
         <path d="M32 30v28M32 34c-6 0-9 4-9 9M32 40c6 0 9 3 9 8M32 46c-5 0-7 3-7 6" stroke="var(--verde)" stroke-width="4" stroke-linecap="round" fill="none"/>
       </svg>
+
       <span class="brand-text"><strong>Raízes do Nordeste</strong><span>Comida da terra, de verdade</span></span>
+      
+      <svg viewBox="0 0 64 64" fill="none" xmlns="  http://www.w3.org/2000/svg">
+        <circle cx="32" cy="20" r="11" fill="var(--sol)" stroke="var(--tinta)" stroke-width="3"/>
+        <path d="M32 4v6M32 30v6M14 20h6M46 20h6M20 8l4 4M44 8l-4 4" stroke="var(--tinta)" stroke-width="3" stroke-linecap="round"/>
+        <path d="M32 30v28M32 34c-6 0-9 4-9 9M32 40c6 0 9 3 9 8M32 46c-5 0-7 3-7 6" stroke="var(--verde)" stroke-width="4" stroke-linecap="round" fill="none"/>
+      </svg>
+    
+    
     </a>
     <nav class="tabs">
       <button data-view="home" onclick="switchView('home')" class="active">Início</button>
@@ -505,7 +514,7 @@
   </div>
 </header>
 
-<!-- ============ HOME ============ -->
+               <!-- ======= HOME ====== -->
 <section class="view active" id="view-home">
   <div class="hero">
     <div class="hero-inner">
@@ -558,7 +567,7 @@
   </div>
 </section>
 
-<!-- ============ CARDÁPIO ============ -->
+                                  <!-- ======= CARDÁPIO ====== -->
 <section class="view" id="view-cardapio">
   <div class="wrap">
     <p class="eyebrow">Cardápio por unidade</p>
@@ -569,7 +578,7 @@
   </div>
 </section>
 
-<!-- ============ PEDIDOS / STATUS ============ -->
+               <!-- ===== PEDIDOS / STATUS===== -->
 <section class="view" id="view-pedidos">
   <div class="wrap">
     <p class="eyebrow">Acompanhamento</p>
@@ -578,7 +587,7 @@
   </div>
 </section>
 
-<!-- ============ FIDELIDADE ============ -->
+             <!-- ======== FIDELIDADE======== -->
 <section class="view" id="view-fidelidade">
   <div class="wrap">
     <p class="eyebrow">Clube Mandacaru</p>
@@ -587,7 +596,7 @@
   </div>
 </section>
 
-<!-- ============ PROMOÇÕES ============ -->
+               <!-- ======== PROMOÇÕES======== -->
 <section class="view" id="view-promocoes">
   <div class="wrap">
     <p class="eyebrow">Por tempo limitado</p>
@@ -596,7 +605,7 @@
   </div>
 </section>
 
-<!-- ============ ENTRAR / CADASTRAR ============ -->
+               <!-- ======== ENTRAR / CADASTRAR======== -->
 <section class="view" id="view-auth">
   <div class="wrap">
     <p class="eyebrow">Sua conta</p>
@@ -633,7 +642,7 @@
   </div>
 </section>
 
-<!-- ============ PAGAMENTO ============ -->
+             <!-- === PAGAMENTO ====== -->
 <section class="view" id="view-pagamento">
   <div class="wrap">
     <p class="eyebrow">Finalizar pedido</p>
@@ -642,7 +651,7 @@
   </div>
 </section>
 
-<!-- ============ CART DRAWER ============ -->
+             <!-- ======= CART DRAWER ====== -->
 <div class="drawer-overlay" id="drawerOverlay" onclick="closeCart()"></div>
 <div class="drawer" id="drawer">
   <div class="drawer-head">
@@ -666,7 +675,7 @@
   </div>
 </div>
 
-<!-- ============ AVISO DE COOKIES ============ -->
+                            <!-- ===== AVISO DE COOKIES ======= -->
 <aside id="cookieBanner" class="cookie-banner" role="dialog" aria-label="Preferências de cookies" aria-live="polite">
   <div>
     <strong>Usamos cookies</strong>
@@ -678,7 +687,7 @@
   </div>
 </aside>
 
-<!-- Botão WhatsApp Flutuante -->
+                     <!-- Botão WhatsApp Flutuante -->
 <div class="whatsapp-float">
   <div class="whatsapp-bubble"></div>
   <a href="https://wa.me/5541995060218" target="_blank" class="whatsapp-btn" title="WhatsApp">
@@ -692,17 +701,15 @@
   <div class="wrap">
     <div>
       <p class="eyebrow">Raízes do Nordeste</p>
-      <small>Projeto acadêmico de demonstração · pagamento simulado, sem cobrança real.</small>
+      <small> Unidades: Recife · Fortaleza · Salvador · Natal</small>
     </div>
-    <div>
-      <small>Unidades: Recife · Fortaleza · Salvador · Natal</small>
-    </div>
+   
   </div>
   
 </footer>
 
 <script>
-/* ================= DADOS ================= */
+                       /* ====== DADOS========= */
 const UNITS = {
   recife:   {nome:"Recife (PE)",    endereco:"Rua da Aurora, 210 — Boa Vista",   horario:"11h–22h"},
   fortaleza:{nome:"Fortaleza (CE)", endereco:"Av. Beira Mar, 880 — Meireles",    horario:"11h–23h"},
@@ -758,7 +765,7 @@ const RECOMPENSAS = [
   {id:"r4", nome:"Combo Sertanejo grátis", custo:600},
 ];
 
-/* ================= ESTADO (em memória) ================= */
+                    /* ====== ESTADO (em memória) ========= */
 const TAXA_ENTREGA = 8;
 
 const state = {
@@ -781,7 +788,7 @@ function carregarLogin(){const u=localStorage.getItem("usuarioLogado");if(u){sta
 
 const STATUS_STEPS = ["Recebido","Em preparo","Saiu para entrega","Entregue"];
 
-/* ================= NAVEGAÇÃO ================= */
+                    /* ============ NAVEGAÇÃO ===== */
 function switchView(id){
   document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
   document.getElementById("view-"+id).classList.add("active");
@@ -797,7 +804,7 @@ function handleAuthBtn(){
   if(state.user){ logout(); } else { switchView("auth"); }
 }
 
-/* ================= AUTENTICAÇÃO ================= */
+                           /* ====== AUTENTICAÇÃO ============== */
 function doSignup(e){
   e.preventDefault();
   const nome = document.getElementById("suNome").value.trim();
@@ -853,7 +860,7 @@ function updateAuthUI(){
   btn.textContent = state.user ? ("Sair (" + state.user.nome.split(" ")[0] + ")") : "Entrar";
 }
 
-/* ================= CARDÁPIO ================= */
+                                  /* ==== CARDÁPIO ============ */
 function renderUnitPicker(){
   const el = document.getElementById("unitPicker");
   el.innerHTML = Object.keys(UNITS).map(k=>
@@ -900,7 +907,7 @@ function menuItemCard(it,especial){
   </div>`;
 }
 
-/* ================= CARRINHO ================= */
+              /* ========== CARRINHO ======= */
 function addToCart(id,nome,preco){
   const existing = state.cart.find(i=>i.id===id);
   if(existing){ existing.qtd++; } else { state.cart.push({id,nome,preco,qtd:1}); }
@@ -1007,7 +1014,7 @@ function goCheckout(){
   renderPagamento();
 }
 
-/* ================= PAGAMENTO (simulado) ================= */
+                   /* ============ PAGAMENTO (simulado) ========= */
 function renderPagamento(){
   const sub = cartSubtotal();
   const discount = sub * state.couponPct;
@@ -1052,7 +1059,7 @@ async function submitPayment(e, total){
   resultBox.innerHTML = `<div class="pay-status"><div class="spinner"></div><p>Aguardando confirmação do parceiro externo...</p></div>`;
   await wait(1400);
 
-  // cria o pedido
+                    // cria o pedido
   const orderId = "RN-" + (state.orderSeq++);
   const pointsEarned = Math.round(total);
   const order = {
@@ -1088,7 +1095,7 @@ async function submitPayment(e, total){
 
 function wait(ms){ return new Promise(r=>setTimeout(r,ms)); }
 
-/* progresso automático do pedido (simulação de status) */
+                      /* progresso automático do pedido (simulação de status) */
 function startOrderProgress(order){
   const interval = setInterval(()=>{
     if(order.statusIndex >= STATUS_STEPS.length-1){ clearInterval(interval); return; }
@@ -1098,7 +1105,7 @@ function startOrderProgress(order){
   }, 9000);
 }
 
-/* ================= PEDIDOS / STATUS ================= */
+              /* ======= PEDIDOS / STATUS ============ */
 function renderPedidos(){
   const box = document.getElementById("pedidosContainer");
   if(!state.user){
@@ -1132,7 +1139,7 @@ function renderPedidos(){
   `).join("");
 }
 
-/* ================= FIDELIDADE ================= */
+                               /* ====== FIDELIDADE ===== */
 function tierInfo(points){
   if(points < 200) return {nome:"Broto", min:0, max:200, next:"Flor de Mandacaru"};
   if(points < 500) return {nome:"Flor de Mandacaru", min:200, max:500, next:"Xique-Xique"};
@@ -1180,7 +1187,7 @@ function redeemReward(id,custo,nome){
   renderFidelidade();
 }
 
-/* ================= COOKIES ================= */
+               /* ======== COOKIES ======== */
 function salvarPreferenciaCookies(preferencia){
   localStorage.setItem("preferenciaCookies", preferencia);
   document.getElementById("cookieBanner").hidden = true;
@@ -1195,7 +1202,7 @@ function carregarPreferenciaCookies(){
   }
 }
 
-/* ================= PROMOÇÕES ================= */
+               /* ======== PROMOÇÕES ========= */
 function renderPromocoes(){
   document.getElementById("promoContainer").innerHTML = PROMOCOES.map(p=>`
     <div class="promo-card">
@@ -1209,7 +1216,7 @@ function renderPromocoes(){
   `).join("");
 }
 
-/* ================= INIT ================= */
+                /* ======== INIT ======== */
 document.querySelectorAll("nav.tabs button").forEach(b=>{});
 carregarUsuarios();
 carregarLogin();
